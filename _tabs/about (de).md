@@ -26,7 +26,7 @@ Ich bin ShaoYan (Matt) Ji, ein leidenschaftlicher Entwickler mit Erfahrung in Fi
 
 ## Lass uns in Kontakt bleiben!
 
-📫 **Kontaktieren Sie mich:** Schicken Sie mir gerne eine Nachricht an jisifu@gmail.com. Ich bin immer offen für neue Möglichkeiten und Zusammenarbeit!
+📫 **Kontaktieren Sie mich:** Schicken Sie mir gerne eine Nachricht an matt@bountystash.com. Ich bin immer offen für neue Möglichkeiten und Zusammenarbeit!
 
 ⚡ **Fun Fact:** Wenn ich nicht gerade am Codieren bin, finden Sie mich draußen in der Natur oder bastelnd an DIY-Projekten.
 

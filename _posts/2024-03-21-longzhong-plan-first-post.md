@@ -1,9 +1,10 @@
 ---
 layout: post
 title: Navigating Chaos with the Longzhong Plan
+date: 2024-03-21
+description: A strategy-themed post about navigating uncertainty, career planning, and building a guidance app inspired by the Longzhong Plan.
 categories: [Project/Longzhong Plan]
-tags: [energy, risk, cybersecurity, technology]
-tags: [chaos, longzhong_plan, liu_bei, han_dynasty, strategy, career_consultancy, react_native, cross_platform_development, skill_inventory, innovation, technology, uncertainty, guidance, ambition, future_planning]
+tags: [energy, risk, cybersecurity, technology, chaos, longzhong_plan, liu_bei, han_dynasty, strategy, career_consultancy, react_native, cross_platform_development, skill_inventory, innovation, uncertainty, guidance, ambition, future_planning]
 image:
   path: https://envs.sh/uw6.jpg
   alt: Zhuge Liang's longzhang plan revealed to take over southwestern china two decades before it executed

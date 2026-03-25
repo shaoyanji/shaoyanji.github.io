@@ -10,6 +10,12 @@
     gem
     jekyll
     bundler
+    go-task
+    curl
+    git
+    gum
+    python3
+    ripgrep
   ];
 
   # https://devenv.sh/languages/

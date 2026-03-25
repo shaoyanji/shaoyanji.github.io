@@ -19,7 +19,7 @@ title: Matt Ji # the main title
 tagline: Energy | Risk | Tech # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  A minimal, responsive and feature-rich Jekyll theme for technical writing.
+  Writing on energy, risk, technology, and systems.
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
@@ -34,7 +34,7 @@ twitter:
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: matt
+  name: Matt Ji
   email: matt@bountystash.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
@@ -189,6 +189,7 @@ exclude:
   - "*.gem"
   - "*.gemspec"
   - docs
+  - scripts
   - tools
   - README.md
   - LICENSE

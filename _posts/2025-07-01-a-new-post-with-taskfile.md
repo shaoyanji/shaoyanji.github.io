@@ -1,7 +1,7 @@
 ---
 layout: post
 title: A Taskfile-Powered Blog Engine
-date: 2025-07-01 
+date: 2025-07-01
 description: Many people look at the framework as the fulcrum of the blog. I believe that its the tooling that makes a blog both fun to read and write 
 author: matt
 categories: [Blogging]

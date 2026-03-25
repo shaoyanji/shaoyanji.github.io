@@ -2,6 +2,7 @@
 layout: post
 title: How to get a free Go web server
 date: 2025-06-30
+description: Notes on using free hosting services to run a small Go web server and serve lightweight apps.
 categories: [Blog/Comparison]
 tags: [technology, analysis, Go]
 image:

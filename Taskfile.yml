@@ -4,60 +4,103 @@ version: "3"
 
 vars:
   JEKYLL: bundle exec jekyll
-  WHOAMI: whoami
 
 tasks:
-  dependencies:
-    cmds:
-      - nix-shell
-      - gem install bundle && bundle install && bundle && bundle exec jekyll serve --incremental
   default:
+    desc: List available tasks
     cmds:
-      # - git pull
-      - task $(cat ./Taskfile.yml | yq '.tasks|keys|.[]' | fzf)
+      - task --list
     silent: true
-  jserve:
+  serve:
+    desc: Run the local Jekyll server
     cmds:
-      - '{{.JEKYLL}} serve'
+      - "{{.JEKYLL}} serve --incremental"
     silent: true
-  jdraft:
+  build:
+    desc: Build the site
     cmds:
-      - '{{.JEKYLL}} draft "My new draft"'
+      - "{{.JEKYLL}} build"
     silent: true
-  jpost:
+  newpost:
+    desc: Interactively create a post with gum prompts and a tgpt-generated scaffold
     cmds:
-      - '{{.JEKYLL}} post "My new post" --timestamp-format "%Y-%m-%d %H:%M:%S %z"'
+      - bash scripts/newpost.sh
     silent: true
-  git-add-commit-push:
+  audit-external:
+    desc: Audit external links and image hosts referenced by posts
     cmds:
-      - git add .
-        && git commit -m "update"
-        && git push
-        && git status
-        && echo "git push success"
-        || echo "git push failed"
+      - python3 scripts/audit_external_refs.py
+    silent: true
   mdimg:
+    desc: Generate markdown for an uploaded AI image
     cmds:
       - echo -n '![{{.CLI_ARGS}}]('$(task awkimg -- {{.CLI_ARGS}})')'
     silent: true
   awkimg:
+    desc: Generate and upload an AI image
     vars:
       TGPT:
         sh: which tgpt
     cmds:
       - curl --no-progress-meter -F"file=@$('{{.TGPT}}' --img --height 630 --width 1200 "{{.CLI_ARGS}}" | awk '{match($0, /Saved image as ([^ ]+\.jpg)/, arr);  if (arr[1] != "") {print arr[1]} }')" https://envs.sh
     silent: true
-  exit:
-    cmds:
-      - exit
   post:
+    desc: Create a new post. Usage: task post -- "My Title"
     vars:
       DATE:
         sh: date "+%Y-%m-%d"
+      TIMESTAMP:
+        sh: date "+%Y-%m-%d %H:%M:%S %z"
       TITLE:
-        sh: gum input --prompt 'Title> '
+        sh: |
+          if [ -n "{{.CLI_ARGS}}" ]; then
+            printf '%s' "{{.CLI_ARGS}}"
+          else
+            printf '%s' "Untitled Post"
+          fi
+      TITLE_YAML:
+        sh: printf '%s' "{{.TITLE}}" | sed "s/'/''/g"
       SLUG:
-        sh: echo {{.TITLE}} | sed -E 's/(.*)/\L\1/; s/ /_/g'
+        sh: |
+          printf '%s' "{{.TITLE}}" \
+            | tr '[:upper:]' '[:lower:]' \
+            | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//'
+      FILE:
+        sh: printf '_posts/%s-%s.md' "{{.DATE}}" "{{.SLUG}}"
     cmds:
-      - "printf '%s\n' '---' 'layout: post' 'title: {{.TITLE}}' 'date: {{.DATE}}' 'categories: [Blog]' 'tags: [technology]' '---' '' '' > ./_posts/{{.DATE}}-{{.SLUG}}.md"
-      - $EDITOR ./_posts/{{.DATE}}-{{.SLUG}}.md
+      - |
+        if [ -e "{{.FILE}}" ]; then
+          echo "{{.FILE}} already exists" >&2
+          exit 1
+        fi
+        printf '%s\n' \
+          '---' \
+          'layout: post' \
+          "title: '{{.TITLE_YAML}}'" \
+          'date: {{.TIMESTAMP}}' \
+          'description:' \
+          'author: matt' \
+          'categories: [Blog]' \
+          'tags: [technology]' \
+          'toc: true' \
+          'comments: false' \
+          'image:' \
+          '  path:' \
+          '  alt:' \
+          '---' \
+          '' \
+          > "{{.FILE}}"
+      - |
+        if [ -n "${EDITOR:-}" ]; then
+          "$EDITOR" "{{.FILE}}"
+        else
+          echo "Created {{.FILE}}"
+        fi
+    silent: true
+  git-add-commit-push:
+    desc: Stage, commit, and push all local changes
+    cmds:
+      - git add .
+      - git commit -m "update"
+      - git push
+      - git status

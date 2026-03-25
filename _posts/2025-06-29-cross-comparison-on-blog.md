@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Psst, Nix and blogging
-date: 2024-11-13
+date: 2025-06-29
+description: A mid-year check-in on Jekyll, Hugo, and lighter static site workflows after time away from blogging.
 categories: [Blog/Comparison]
 tags: [technology, risk, analysis]
 image:

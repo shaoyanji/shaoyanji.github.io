@@ -2,6 +2,7 @@
 layout: post
 title: Is this the last post for this blog?
 date: '2024-11-13 09:51:38 +0000'
+description: A reflection on Jekyll friction, Nix-based workflows, and whether this blog should stay on its current stack.
 categories: [Blog/Comparison]
 tags: [technology, risk, analysis]
 image:

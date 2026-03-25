@@ -1,29 +1,43 @@
-# Hi there! 👋
+# shaoyanji.github.io
 
-I'm ShaoYan (Matt) Ji, a passionate developer with a background in finance and engineering. Welcome to my corner of the GitHub universe, where I blend my technical expertise with a knack for financial analysis and project management.
+Source for a Jekyll blog built on the Chirpy theme.
 
-## About Me
+## Workflow
 
-🌟 **Professional Background:** With experience spanning asset management, financial analysis, and technical operations, I bring a unique perspective to every project I undertake.
+The canonical local environment is `devenv`, loaded automatically through `direnv`.
 
-🔭 **Current Focus:** I'm currently diving deep into the world of renewable energy management, exploring innovative solutions to drive sustainable development.
+```bash
+direnv allow
+task serve
+```
 
-💻 **Tech Stack:** Python, Java, C++, you name it! I love experimenting with different programming languages and technologies to solve real-world problems.
+If you do not use `direnv`, run `devenv shell` manually before using the task commands.
 
-📈 **Analytical Mindset:** Whether it's crunching numbers or conducting market research, I thrive on leveraging data-driven insights to make informed decisions.
+## Common Tasks
 
-## What I Bring to the Table
+```bash
+task serve
+task build
+task newpost
+task post -- "My New Post"
+task audit-external
+```
 
-- **Entrepreneurial Spirit:** As a self-starter, I'm not afraid to roll up my sleeves and tackle challenges head-on.
-- **Team Player:** Collaboration is key! I thrive in dynamic team environments, where diverse perspectives fuel innovation.
-- **Attention to Detail:** From coding to financial modeling, I believe that success lies in the finer details.
+`task post` creates a new file in `_posts/` with the repo's standard front matter.
+`task newpost` uses `gum` for prompts and `tgpt --provider sky` to draft a scaffold from your topic.
 
-## Let's Connect!
+## Structure
 
-📫 **Reach Out:** Feel free to drop me a message at matt@bountystash.com. I'm always open to new opportunities and collaborations!
+- `_config.yml`: site identity, Chirpy settings, defaults, archives
+- `_posts/`: blog posts
+- `_tabs/`: top-level navigation pages
+- `_data/`: authors, contact links, sharing config
+- `_plugins/`: local Jekyll hooks
+- `.github/workflows/pages-deploy.yml`: GitHub Pages build and deploy
 
-⚡ **Fun Fact:** When I'm not coding, you can find me exploring the great outdoors or tinkering with DIY projects.
+## Notes
 
-## Projects Showcase
-
-Stay tuned for updates on my latest projects and contributions! From risk management tools to renewable energy initiatives, there's always something exciting in the works.
+- Post `last_modified_at` is populated from git history by `_plugins/posts-lastmod-hook.rb`.
+- `shell.nix` is kept as a fallback shell. `devenv` is the primary workflow.
+- Deploy CI intentionally skips external URL checks so publishing stays reliable. Use `task audit-external` or the external audit workflow to catch broken third-party links and image hosts.
+- `task newpost` requires `tgpt` to be available on `PATH`.
