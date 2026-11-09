@@ -37,10 +37,19 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # Only what the browser asks for. Uploading `.` also publishes the C
+      # source, the test, the build script and this workflow at their paths,
+      # which nobody needs from a landing page.
+      - name: Stage the site
+        run: |
+          mkdir -p _site
+          cp index.html style.css site.js particles.wasm robots.txt sitemap.xml _site/
+          cp -R assets _site/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: "_site"
 
       - name: Deploy to GitHub Pages
         id: deployment

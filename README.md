@@ -23,12 +23,27 @@ The page works without it: if wasm fails to load, the CSS gradient is the
 backdrop and the content is unchanged. `prefers-reduced-motion` renders a single
 still frame and never starts the loop.
 
+The page is also readable without the gradient: the `h1` sets its colour before
+`background-clip:text`, so a browser that ignores the clip, or a forced-colors
+mode, shows the name instead of none of it. The share card is
+`assets/og.png`, drawn in the site's own palette, and `robots.txt` and
+`sitemap.xml` are checked in because GitHub Pages generates neither.
+
 ## Build
 
 ```sh
 clang --version          # any clang with the wasm32 target
-bash build.sh            # writes particles.wasm
+bash build.sh            # writes particles.wasm (1486 bytes)
 node test.js             # exercises init/step/burst against the frame
+```
+
+Under Nix, the `clang` from a `nix shell` is a cc-wrapper that injects
+`-dynamic-linker`, which a `--target=wasm32 -nostdlib` link rejects. Use the
+unwrapped compiler (`llvmPackages.clang-unwrapped`) with `lld` on `PATH`:
+
+```sh
+nix shell nixpkgs#llvmPackages.clang-unwrapped nixpkgs#lld \
+  -c bash -c 'CC=$(command -v clang) bash build.sh && node test.js'
 ```
 
 CI (`.github/workflows/static.yml`) builds, tests and deploys on every push to

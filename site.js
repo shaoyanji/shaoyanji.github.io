@@ -1,6 +1,6 @@
 /* site.js — load the wasm, hand it the pointer, blit one image per frame.
  *
- * The wasm owns everything visual: it simulates 2,600 points and writes an
+ * The wasm owns everything visual: it simulates 1,800 points and writes an
  * RGBA frame into its own memory. This file never touches a pixel — it wraps
  * that memory in an ImageData (zero copy) and lets drawImage scale the 400x225
  * frame up to the viewport, where the GPU's bilinear filter does the bloom.

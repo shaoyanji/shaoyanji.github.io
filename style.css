@@ -53,10 +53,14 @@ h1{
   margin:0;
   font:400 clamp(3.4rem,13vw,8.5rem)/.92 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
   letter-spacing:-.03em;
+  /* The gradient is the ink, but the colour is set first: where background-clip
+     is unsupported, or forced-colors replaces the palette, the name still
+     renders instead of disappearing. */
+  color:var(--ink);
   background:linear-gradient(96deg,#fff 6%,var(--glow) 42%,var(--hot) 92%);
   -webkit-background-clip:text;
   background-clip:text;
-  color:transparent;
+  -webkit-text-fill-color:transparent;
 }
 .lede{
   max-width:34rem;
@@ -92,7 +96,12 @@ nav a:hover,nav a:focus-visible{
   border-color:rgba(122,248,255,.6);
   background:rgba(30,24,66,.6);
   transform:translateY(-2px);
-  outline:none;
+}
+/* Keyboard focus keeps a ring: a border that shifts colour is not a focus
+   indicator, and `outline:none` here used to remove the only one. */
+nav a:focus-visible{
+  outline:2px solid var(--glow);
+  outline-offset:3px;
 }
 .hint{
   margin:2.4rem 0 0;
@@ -100,8 +109,20 @@ nav a:hover,nav a:focus-visible{
   letter-spacing:.14em;
   text-transform:uppercase;
   color:var(--dim);
-  opacity:.6;
+  opacity:.85;
 }
+footer{
+  margin:clamp(2.6rem,7vh,4rem) 0 0;
+  padding-top:1.1rem;
+  border-top:1px solid var(--line);
+  font:400 .82rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;
+  color:var(--dim);
+}
+footer a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.22em}
+footer a:hover{color:var(--glow)}
 @media (prefers-reduced-motion:reduce){
   nav a{transition:none}
+}
+@media (forced-colors:active){
+  h1{-webkit-text-fill-color:currentColor;background:none;color:CanvasText}
 }
